@@ -11,7 +11,8 @@ Page({
     form: '',
     index: '',
     oldTodo: {},
-    nowTodo: {}
+    nowTodo: {},
+    flag: true
   },
 
   /**
@@ -81,31 +82,42 @@ Page({
    * @param {*} e 
    */
   async submit(e) {
-    let nowTodo = e.detail;
-
     const {
-      index,
-      oldTodo
-    } = this.data;
+      flag
+    } = this.data
+    if (flag) {
+      this.setData({
+        flag: false
+      })
+      let nowTodo = e.detail;
 
-    if (index) {
-      const flag = this.isEq(oldTodo, nowTodo)
-      if (flag) {
-        wx.showToast({
-          title: '任务没有发生更改哦~',
-          icon: 'none'
-        });
-        return;
+      const {
+        index,
+        oldTodo
+      } = this.data;
+
+      if (index) {
+        const isEq = this.isEq(oldTodo, nowTodo)
+        if (isEq) {
+          wx.showToast({
+            title: '任务没有发生更改哦~',
+            icon: 'none'
+          });
+          return;
+        } else {
+          nowTodo._id = await this.toCloud(nowTodo, oldTodo._id)
+        }
       } else {
-        nowTodo.id = await this.toCloud(nowTodo, oldTodo.id)
+        nowTodo._id = await this.toCloud(nowTodo, oldTodo._id)
       }
-    } else {
-      nowTodo.id = await this.toCloud(nowTodo, oldTodo.id)
+      this.setData({
+        nowTodo
+      })
+      this.setStorage()
     }
     this.setData({
-      nowTodo
+      flag: true
     })
-    this.setStorage()
   },
 
 
@@ -146,11 +158,11 @@ Page({
         return oldId
       } else {
         const {
-          _id: id
+          _id: _id
         } = await db.collection('todoList').add({
           data: nowTodo
         })
-        return id
+        return _id
       }
     }
   },

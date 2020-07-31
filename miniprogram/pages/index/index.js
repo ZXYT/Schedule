@@ -69,8 +69,8 @@ Page({
     const {
       todoList
     } = this.data
-    const id = todoList[index].id
-    console.log(index, id)
+    const _id = todoList[index]._id
+    console.log(index, _id)
 
     wx.showModal({
       title: '警告',
@@ -83,9 +83,9 @@ Page({
             todoList
           })
           wx.setStorageSync('todos', todoList);
-          if (id) {
-            console.log('id:', id)
-            this.dbDelete(id)
+          if (_id) {
+            console.log('_id:', _id)
+            this.dbDelete(_id)
           }
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -108,10 +108,10 @@ Page({
 
   /**
    * 删除云端数据
-   * @param {*} id 
+   * @param {*} _id 
    */
-  async dbDelete(id) {
-    await db.collection('todoList').doc(id).remove()
+  async dbDelete(_id) {
+    await db.collection('todoList').doc(_id).remove()
   },
 
   /**
@@ -153,7 +153,7 @@ Page({
     } else {
       todoList.forEach((ele, i) => {
         cloudList.forEach((cloudEle, j) => {
-          if (ele.id === cloudEle.id) {
+          if (ele._id === cloudEle._id) {
             todoList[i] = cloudEle
             cloudList.splice(j, 1);
           }
