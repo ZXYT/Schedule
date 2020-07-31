@@ -1,0 +1,64 @@
+/* components/form.wxss */
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, .2);
+  z-index: 100;
+}
+
+.form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  line-height: 2rem;
+}
+
+.head .title {
+  font-weight: 700;
+}
+
+.placeholder {
+  line-height: 2rem;
+}
+
+.text {
+  /* display: inline-block; */
+}
+
+.input {
+  width: 10rem;
+}
+
+.icon {
+  padding-left: 1rem;
+}
+
+.textarea {
+  width: 622rpx;
+}
+
+.text, .textarea, .input{
+  /* border: 1px solid; */
+  height: 2rem;
+  line-height: 2rem;
+  box-sizing: border-box;
+}
+
+.pickerName {
+  color: gray;
+}
+
+.switch {
+  transform: scale(.8);
+}
+
+.submitBtn {
+  background-color: #B71C1C;
+  color: #fff;
+  width: 100%;
+  margin-top: 1rem;
+}

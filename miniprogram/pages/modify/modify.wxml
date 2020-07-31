@@ -1,0 +1,2 @@
+<!--pages/modify.wxml-->
+<myForm bindhideForm="hideForm" bindsubmit='submit' id="form"></myForm>

@@ -1,0 +1,15 @@
+<view>
+	<block wx:if="{{todoList.length}}">
+		<view>
+			<myItem wx:for="{{todoList}}" wx:key="index" data-index="{{index}}" todo="{{item}}" catchshowMore="showMore" catchdelete="delete" catchmodify="modify"></myItem>
+		</view>
+	</block>
+
+	<block wx:else>
+		<view class="empty">
+			<view class="title">还没有任务哦</view>
+			<view class="content">赶紧添加一个吧</view>
+		</view>
+	</block>
+	<navigator url="/pages/modify/modify" class="btn">{{icon}}</navigator>
+</view>

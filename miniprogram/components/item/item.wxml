@@ -1,0 +1,31 @@
+<!--components/item.wxml-->
+<view class="container item" catchtap="showMore">
+	<view class="head spaceBetween">
+		<text class="title">{{todo.title}}</text>
+		<text hidden="{{!todo.isHidden}}">{{todo.shortTime}}</text>
+		<view class="iconfont icon-delete" hidden="{{todo.isHidden}}" catchtap="delete"></view>
+	</view>
+	<view class="content" hidden="{{todo.isHidden}}">
+		<view>{{todo.content}}</view>
+		<view class="time spaceBetween">
+			<block wx:for="{{todo.times}}" wx:key="index">
+				<view class="timeItem">{{item}}</view>
+				<view class="timeItem" wx:if="{{index !== 'secs'}}">:</view>
+			</block>
+			<!-- <view class="timeItem">{{todo.time.days}}</view>
+			<view class="timeItem">:</view>
+		  <view class="timeItem">{{todo.time.hours}}</view>
+			<view class="timeItem">:</view>
+			<view class="timeItem">{{todo.time.mins}}</view>
+			<view class="timeItem">:</view>
+			<view class="timeItem">{{todo.time.secs}}</view> -->
+		</view>
+	</view>
+	<view class="icon spaceBetween">
+		<view class="iconfont icon-important {{todo.isImportant ? '' : 'op01'}}"></view>
+		<view class="iconfont icon-urgent {{todo.urgent ? '' : 'op01'}}"></view>
+		<view class="iconfont icon-cloud {{todo.syncToCloud ? '' : 'op01'}}"></view>
+		<view class="iconfont icon-edit {{todo.isHidden ? 'op01' : 'op1'}}" catchtap="modify"></view>
+		<view class="iconfont icon-more {{todo.isHidden ? '' : 'transform'}}"></view>
+	</view>
+</view>

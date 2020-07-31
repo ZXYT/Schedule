@@ -1,0 +1,39 @@
+/* components/item.wxss */
+.item {
+  line-height: 2rem;
+}
+
+.item .head, .item .icon{
+  height: 2rem;
+}
+
+.item .content {
+  /* display: block; */
+  height: 100%;
+  line-height: 1.5rem;
+}
+.item .title {
+  font-size: 20px;
+}
+
+.icon .op01 {
+  opacity: .1;
+}
+
+.icon .op1 {
+  opacity: 1;
+}
+
+.item .icon .icon-edit,
+.item .icon .icon-more{
+  transition: 1s;
+}
+
+.item .icon .transform {
+  transform: rotate(180deg);
+}
+
+.time .timeItem {
+  width: 2rem;
+  text-align: center;
+}
