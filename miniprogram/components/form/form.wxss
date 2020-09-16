@@ -5,7 +5,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, .2);
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: 100;
 }
 
@@ -17,46 +17,44 @@
   line-height: 2rem;
 }
 
-.head .title {
-  font-weight: 700;
-}
-
-.placeholder {
-  line-height: 2rem;
-}
-
-.text {
-  /* display: inline-block; */
-}
-
-.input {
-  width: 10rem;
-}
-
-.icon {
+.form .head .icon {
   padding-left: 1rem;
 }
 
-.textarea {
-  width: 622rpx;
+.form .head .title {
+  font-weight: 700;
 }
 
-.text, .textarea, .input{
+.form .text,
+.form .textarea,
+.form .input {
   /* border: 1px solid; */
   height: 2rem;
   line-height: 2rem;
   box-sizing: border-box;
 }
 
-.pickerName {
+.form .name .input {
+  width: 10rem;
+}
+
+.form .textarea {
+  width: 622rpx;
+}
+
+.form .section .pickerName {
   color: gray;
 }
 
-.switch {
-  transform: scale(.8);
+.form .Characteristics .switch {
+  transform: scale(0.8);
 }
 
-.submitBtn {
+.form .placeholder {
+  line-height: 2rem;
+}
+
+.form .submitBtn {
   background-color: #B71C1C;
   color: #fff;
   width: 100%;

@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/list/list",
     "pages/modify/modify"
   ],
   "window": {
@@ -8,10 +9,20 @@
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#7F0000",
     "navigationBarTitleText": "Schedule",
-    "navigationBarTextStyle": "white",
-    "enablePullDownRefresh": true
+    "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2",
-  "debug": true
+  "debug": true,
+  "tabBar": {
+    "list": [{
+        "pagePath": "pages/index/index",
+        "text": "当前任务"
+      },
+      {
+        "pagePath": "pages/list/list",
+        "text": "任务列表"
+      }
+    ]
+  }
 }

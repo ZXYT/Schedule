@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "myItem": "/components/item/item"
+  },
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#eeeeee",
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": true
+}

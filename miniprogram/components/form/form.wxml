@@ -1,47 +1,47 @@
-<!--components/form.wxml-->
+<!-- components/form.wxml -->
 <view>
-	<view class="mask" bindtap="hideForm"></view>
-	<form class="form container" catchsubmit="formSubmit" catchreset="formReset">
-		<view class="head spaceBetween">
-			<text class="text title">{{name}}</text>
-			<text class="text icon iconfont icon-delete" hidden="{{!delete}}"></text>
-		</view>
-		<view class="spaceBetween">
-			<input name="title" class="input" value="{{title}}" type="text" focus="true" placeholder="任务名称" placeholder-class="placeholder" focus confirm-type="next" />
-			<view>
-				<text class="text icon iconfont icon-important" hidden="{{!important}}"></text>
-			</view>
-		</view>
-		<textarea name="content" class="textarea" value="{{content}}" auto-height placeholder="任务描述" placeholder-class="placeholder" auto-height></textarea>
-		<view class="section">
-			<picker name="date" mode="date" value="{{date}}" start="1998-01-01" end="2222-12-31" bindchange="bindDateChange">
-				<view class="spaceBetween">
-					<text class="text pickerName">选择日期:</text>
-					<text class="text pickercontent">{{date}}</text>
-				</view>
-			</picker>
-		</view>
-		<view class="section">
-			<picker name="time" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
-				<view class="spaceBetween">
-					<text class="text pickerName">选择时间:</text>
-					<text class="text pickercontent">{{time}}</text>
-				</view>
-			</picker>
-		</view>
-		<view class="Characteristics">
-			<view class="spaceBetween">
-				<text class="text">重要</text>
-				<switch name="isImportant" checked="{{isImportant}}" type="switch" class="switch" bindchange="isImportant"></switch>
-			</view>
-			<slider name="importantValue" value="{{importantValue}}" show-value step="5" hidden="{{!isImportant}}"></slider>
-		</view>
-		<view class="Characteristics">
-			<view class="spaceBetween">
-				<text class="text">同步到云</text>
-				<switch name="syncToCloud" checked="{{syncToCloud}}" type="switch" class="switch" bindchange="syncToCloud"></switch>
-			</view>
-		</view>
-		<button class="submitBtn" form-type="submit">{{name}}</button>
-	</form>
+  <view class="mask" bindtap="hideForm"></view>
+  <form class="form container" catchsubmit="formSubmit" catchreset="formReset">
+    <view class="head spaceBetween">
+      <text class="text title">{{name}}</text>
+      <text class="text icon iconfont icon-delete" hidden="{{!delete}}"></text>
+    </view>
+    <view class="name spaceBetween">
+      <input name="title" class="input" value="{{title}}" type="text" focus="true" placeholder="任务名称" placeholder-class="placeholder" focus confirm-type="next" />
+      <view>
+        <text class="text icon iconfont icon-important" hidden="{{!important}}"></text>
+      </view>
+    </view>
+    <textarea name="content" class="textarea" value="{{content}}" auto-height placeholder="任务描述" placeholder-class="placeholder" auto-height></textarea>
+    <view class="section">
+      <picker name="date" mode="date" value="{{date}}" start="1998-01-01" end="2222-12-31" bindchange="bindDateChange">
+        <view class="spaceBetween">
+          <text class="text pickerName">选择日期:</text>
+          <text class="text pickercontent">{{date}}</text>
+        </view>
+      </picker>
+    </view>
+    <view class="section">
+      <picker name="time" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+        <view class="spaceBetween">
+          <text class="text pickerName">选择时间:</text>
+          <text class="text pickercontent">{{time}}</text>
+        </view>
+      </picker>
+    </view>
+    <view class="Characteristics">
+      <view class="spaceBetween">
+        <text class="text">重要</text>
+        <switch name="isImportant" checked="{{isImportant}}" type="switch" class="switch" bindchange="isImportant"></switch>
+      </view>
+      <slider name="importantValue" value="{{importantValue}}" show-value step="5" hidden="{{!isImportant}}"></slider>
+    </view>
+    <view class="Characteristics">
+      <view class="spaceBetween">
+        <text class="text">同步到云</text>
+        <switch name="syncToCloud" checked="{{syncToCloud}}" type="switch" class="switch" bindchange="syncToCloud"></switch>
+      </view>
+    </view>
+    <button class="submitBtn" form-type="submit">{{name}}</button>
+  </form>
 </view>

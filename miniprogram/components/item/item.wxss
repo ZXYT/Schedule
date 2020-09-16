@@ -3,8 +3,13 @@
   line-height: 2rem;
 }
 
-.item .head, .item .icon{
+.item .head,
+.item .icon {
   height: 2rem;
+}
+
+.item .head .title {
+  font-size: 20px;
 }
 
 .item .content {
@@ -12,20 +17,14 @@
   height: 100%;
   line-height: 1.5rem;
 }
-.item .title {
-  font-size: 20px;
-}
 
-.icon .op01 {
-  opacity: .1;
-}
-
-.icon .op1 {
-  opacity: 1;
+.item .content .time .timeItem {
+  width: 2rem;
+  text-align: center;
 }
 
 .item .icon .icon-edit,
-.item .icon .icon-more{
+.item .icon .icon-more {
   transition: 1s;
 }
 
@@ -33,7 +32,10 @@
   transform: rotate(180deg);
 }
 
-.time .timeItem {
-  width: 2rem;
-  text-align: center;
+.item .op01 {
+  opacity: .1;
+}
+
+.item .op1 {
+  opacity: 1;
 }

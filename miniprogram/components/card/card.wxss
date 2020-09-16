@@ -1,0 +1,49 @@
+/* components/card.wxss */
+.container {
+  line-height: 2rem;
+}
+
+.container .left-time {
+  text-align: center;
+}
+
+.container .left-time .mins {
+  font-size: 4rem;
+}
+
+.container .progress .circle {
+  margin-left: 20rpx;
+  vertical-align: middle;
+  display: inline-block;
+  width: 40rpx;
+  height: 40rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #000;
+  border-radius: 50%;
+}
+
+.container .progress .circle.complet {
+  background-color: #a50a0a;
+}
+
+.container .progress .circle.postpone {
+  border-color: #6a6840;
+}
+
+.container .complet-time {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container .btns {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.container .btns button {
+  margin: 0;
+  background-color: #930c0c;
+  color: #fff;
+  width: 300rpx;
+}

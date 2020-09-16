@@ -54,7 +54,6 @@ Page({
    * 返回
    */
   hideForm() {
-
     this.backToPrev()
     wx.showToast({
       icon: 'none',

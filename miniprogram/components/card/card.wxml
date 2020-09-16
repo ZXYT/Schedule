@@ -1,0 +1,27 @@
+<!-- components/card.wxml -->
+<view class="container">
+  <view>
+    <text>{{title}}</text>
+    <view class="left-time">
+      <text class="mins">{{formatLeft.mins}}</text>
+      <text class="secs">:{{formatLeft.secs}}</text>
+    </view>
+  </view>
+  <view class="name">{{todo.name}}</view>
+  <view class="progress spaceBetween">
+    <text>进度：</text>
+    <view>
+      <view class="circle complet" wx:for="{{cur}}"></view>
+      <view class="circle" wx:for="{{estimated - cur}}"></view>
+      <view class="circle postpone" wx:for="{{postpone - cur + estimated}}"></view>
+    </view>
+  </view>
+  <view class="complet-time">
+    <text>预计完成时间</text>
+    <text>{{completTime}}</text>
+  </view>
+  <view class="btns">
+    <button bindtap="start">开始</button>
+    <button bindtap="interrupt">中断</button>
+  </view>
+</view>
