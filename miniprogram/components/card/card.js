@@ -34,7 +34,8 @@ Component({
     isStart: false, //是否开始
 
     cur: 0, //当前进度
-    completTime: '' //预计完成时间
+    completTime: '', //预计完成时间
+    postpone: 0 //超时次数
   },
 
   /**
@@ -66,9 +67,10 @@ Component({
       } = utils.milliseconds2Time(left)
       if (left < 0) {
         this.next()
-        console.log('time out')
+        // console.log('time out')
         return
       }
+      // console.log(timer)
       const timer = setTimeout(() => {
         this.countDown()
       }, 1000)
@@ -232,6 +234,7 @@ Component({
     },
 
     handleTapEnd() {
+      clearTimeout(this.data.timer)
       this.triggerEvent('end')
     }
   },

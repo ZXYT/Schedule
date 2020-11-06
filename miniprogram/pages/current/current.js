@@ -51,7 +51,7 @@ Page({
       title: '警告',
       content: '是否要结束任务'
     }).then(res => {
-      console.log(res)
+      // console.log(res)
       if (res.confirm) {
         this.setData({
           todo: ''

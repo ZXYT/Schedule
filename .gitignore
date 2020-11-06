@@ -19,3 +19,4 @@ node_modules/
 antmove.config.js
 
 out/
+*.zip

@@ -28,21 +28,21 @@ Page({
     this.getData()
   },
 
-  showMore(e) {
-    // const {
-    //   todoList,
-    //   lastindex
-    // } = this.data
-    // const index = e.target.dataset.index
-    // if (index !== lastindex) {
-    //   todoList[lastindex].isHidden = true;
-    // }
-    // todoList[index].isHidden = !todoList[index].isHidden;
-    // this.setData({
-    //   todoList,
-    //   lastindex: index
-    // })
-  },
+  // showMore(e) {
+  //   const {
+  //     todoList,
+  //     lastindex
+  //   } = this.data
+  //   const index = e.target.dataset.index
+  //   if (index !== lastindex) {
+  //     todoList[lastindex].isHidden = true;
+  //   }
+  //   todoList[index].isHidden = !todoList[index].isHidden;
+  //   this.setData({
+  //     todoList,
+  //     lastindex: index
+  //   })
+  // },
 
   /**
    * 编辑任务
@@ -65,14 +65,14 @@ Page({
       todoList
     } = this.data
     const _id = todoList[index]._id
-    console.log(index, _id)
+    // console.log(index, _id)
 
     wx.showModal({
       title: '警告',
       content: '确认是否删除',
       success: res => {
         if (res.confirm) {
-          console.log('用户点击确定')
+          // console.log('用户点击确定')
           todoList.splice(index, 1)
           this.setData({
             todoList
@@ -83,7 +83,7 @@ Page({
             this.dbDelete(_id)
           }
         } else if (res.cancel) {
-          console.log('用户点击取消')
+          // console.log('用户点击取消')
           return false
         }
       }
@@ -128,10 +128,10 @@ Page({
         content: `在云端查询到${len}条数据，是否同步`,
         success: res => {
           if (res.confirm) {
-            console.log('用户点击确定')
+            // console.log('用户点击确定')
             this.syncData(data)
           } else if (res.cancel) {
-            console.log('用户点击取消')
+            // console.log('用户点击取消')
             return false
           }
         }
@@ -164,7 +164,7 @@ Page({
       })
       todoList.push(...cloudList)
     }
-    console.log(todoList)
+    // console.log(todoList)
     this.setData({
       todoList
     })
