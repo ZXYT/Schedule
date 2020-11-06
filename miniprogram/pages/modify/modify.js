@@ -1,94 +1,75 @@
 // pages/modify.js
+import utils from '../../utils/utils'
 // 获取数据库的引用
 const db = wx.cloud.database();
-
+const expectedList = ['25分钟', '50分钟', '75分钟', '100分钟', '125分钟', '150分钟', '175分钟', '200分钟'];
+const importantList = ['一般', '重要', '非常重要'];
+let flag = true;
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    title: "新建任务",
+    name: '',
+    description: '',
+    date: '2020-05-20',
+    time: '13:14',
+    expectedVal: 1,
+    importantVal: 1,
+    syncToCloud: false,
+
+    expectedList,
+    importantList,
+
     todos: [],
-    form: '',
     index: '',
     oldTodo: {},
     nowTodo: {},
-    flag: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const todos = wx.getStorageSync('todos') || []
-    const form = this.selectComponent('#form');
-    const index = options.index;
-    console.log(index)
+    const todos = wx.getStorageSync('todos') || [];
+    let title = '新建任务'
+    let index = '';
+    let oldTodo = {};
+    if (options.type === 'edit') {
+      title = '修改任务';
+      index = options.index;
+      oldTodo = todos[index];
+    } else {
+      this.getDate()
+    }
     this.setData({
       todos,
-      form,
+      title,
+      index,
+      ...oldTodo,
+      oldTodo,
     })
-    if (index) {
-      this.getStorage(index);
-      this.setData({
-        index
-      })
-    }
   },
 
   /**
-   * 获取当前任务数据
-   * @param {*} index 
+   * 获取一小时后的时间
    */
-  getStorage(index) {
-    const todo = this.data.todos[index];
-    this.data.form.setData({
-      name: '修改任务',
-      ...todo
-    })
+  getDate() {
+    const newDate = new Date(Date.now() + 1000 * 60 * 60);
     this.setData({
-      oldTodo: todo
+      ...utils.formatTime(newDate)
     })
-  },
-
-  /**
-   * 返回
-   */
-  hideForm() {
-    this.backToPrev()
-    wx.showToast({
-      icon: 'none',
-      title: '未发生修改',
-    })
-
-    // wx.showModal({
-    //   title: '提示',
-    //   content: '是否取消修改',
-    //   success: res => {
-    //     if (res.cancel) {
-    //       console.log('用户点击取消')
-    //       return false
-    //     } else
-    //     if (res.confirm) {
-    //       console.log('用户点击确定')
-    //       this.backToPrev()
-    //     }
-    //   }
-    // })
   },
 
   /**
    * 提交
    * @param {*} e 
    */
-  async submit(e) {
-    const {
-      flag
-    } = this.data
+  async formSubmit(e) {
     if (flag) {
-      this.setData({
-        flag: false
-      })
-      let nowTodo = e.detail;
+      flag = false
+      let nowTodo = e.detail.value;
 
       const {
         index,
@@ -103,35 +84,28 @@ Page({
             icon: 'none'
           });
           return;
-        } else {
-          nowTodo._id = await this.toCloud(nowTodo, oldTodo._id)
         }
-      } else {
-        nowTodo._id = await this.toCloud(nowTodo, oldTodo._id)
       }
+      nowTodo._id = await this.toCloud(nowTodo, oldTodo._id)
       this.setData({
         nowTodo
       })
       this.setStorage()
     }
-    this.setData({
-      flag: true
-    })
+    flag = true
   },
-
 
   /**
    * 判断数据是否改变
-   * @param {*} orign 
+   * @param {*} origin 
    * @param {*} target 
    */
-  isEq(orign, target) {
-    let newOrign = Object.getOwnPropertyNames(orign);
-    const len = newOrign.length;
-    for (let i = 0; i < len; i++) {
-      const name = newOrign[i]
-      if (orign[name] !== target[name]) {
-        return false;
+  isEq(origin, target) {
+    for (const key in target) {
+      if (target.hasOwnProperty(key)) {
+        if (origin[key] !== target[key]) {
+          return false;
+        }
       }
     }
     return true;
@@ -143,26 +117,20 @@ Page({
    * @param {*} oldId 
    */
   async toCloud(nowTodo, oldId) {
-    if (!nowTodo.syncToCloud) {
-      if (oldId !== undefined) {
-        await db.collection('todoList').doc(oldId).remove()
-      }
-      return
-    } else {
-      console.log('同步到云')
-      if (oldId !== undefined) {
-        await db.collection('todoList').doc(oldId).update({
-          data: nowTodo,
-        })
-        return oldId
-      } else {
-        const {
-          _id: _id
-        } = await db.collection('todoList').add({
-          data: nowTodo
-        })
-        return _id
-      }
+    if (!nowTodo.syncToCloud && oldId !== undefined) {
+      await db.collection('todoList').doc(oldId).remove()
+    } else if (nowTodo.syncToCloud && oldId !== undefined) {
+      await db.collection('todoList').doc(oldId).update({
+        data: nowTodo,
+      })
+      return oldId
+    } else if(nowTodo.syncToCloud) {
+      const {
+        _id
+      } = await db.collection('todoList').add({
+        data: nowTodo
+      })
+      return _id
     }
   },
 
@@ -181,13 +149,66 @@ Page({
       todos.push(nowTodo);
     }
     wx.setStorageSync('todos', todos);
-    this.backToPrev();
+    wx.navigateBack()
   },
 
   /**
-   * 返回上一页
+   * 监听名称修改
+   * @param {*} e 
    */
-  backToPrev() {
-    wx.navigateBack()
-  }
+  handleInputName(e) {
+    this.setData({
+      name: e.detail.value
+    })
+  },
+
+  /**
+   * 监听描述修改
+   * @param {*} e 
+   */
+  handleInputDescription(e) {
+    this.setData({
+      description: e.detail.value
+    })
+  },
+
+  /**
+   * 监听日期更改
+   * @param {*} e 
+   */
+  bindDateChange(e) {
+    this.setData({
+      date: e.detail.value
+    })
+  },
+
+  /**
+   * 监听时间更改
+   * @param {*} e 
+   */
+  bindTimeChange(e) {
+    this.setData({
+      time: e.detail.value
+    })
+  },
+
+  /**
+   * 监听预计用时更改
+   * @param {*} e 
+   */
+  bindExpectedChange(e) {
+    this.setData({
+      expectedVal: +e.detail.value
+    })
+  },
+
+  /**
+   * 监听重要等级更改
+   * @param {*} e 
+   */
+  bindRankChange(e) {
+    this.setData({
+      importantVal: +e.detail.value
+    })
+  },
 })

@@ -1,1 +1,1 @@
-/* pages/modify.wxss */
+page{background-color:#fff}page .form{padding:32px}page .form .form-item{margin:16px 0;width:100%}page .form .form-item .prompt{color:gray}page .form .title{font-size:1.2em;font-weight:700;text-align:center}page .form .switch{transform:scale(0.625);height:20px;margin-top:-4px}page .form .submitBtn{margin:16px auto;background-color:#B71C1C;color:#fff}page .form .submitBtn[disabled]{color:#999;background-color:#eee}

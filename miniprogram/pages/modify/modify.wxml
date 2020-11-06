@@ -1,2 +1,42 @@
-<!--pages/modify.wxml-->
-<myForm bindhideForm="hideForm" bindsubmit='submit' id="form"></myForm>
+<!-- pages/modify.wxml -->
+<view class="form">
+  <!-- 编辑类型 -->
+  <view class="title">{{title}}</view>
+  <!-- 表单 -->
+  <form catchsubmit="formSubmit">
+    <!-- 任务名称 -->
+    <input name="name" class="form-item" value="{{name}}" type="text" placeholder="任务名称" focus confirm-type="next" bindinput="handleInputName" />
+    <!-- 任务描述 -->
+    <textarea name="description" class="form-item" value="{{description}}" placeholder="任务描述(可省略)" auto-height bindinput="handleInputDescription" ></textarea>
+    <!-- 日期选择器 -->
+    <picker class="form-item" name="date" mode="date" value="{{date}}" start="1998-01-01" end="2222-12-31" bindchange="bindDateChange">
+      <formText title="开始日期">
+        <text>{{date}}</text>
+      </formText>
+    </picker>
+    <!-- 时间选择器 -->
+    <picker class="form-item" name="time" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+      <formText title="开始时间">
+        <text>{{time}}</text>
+      </formText>
+    </picker>
+    <!-- 预计用时 -->
+    <picker class="form-item" name="expectedVal" value="{{expectedVal}}" range="{{expectedList}}" bindchange="bindExpectedChange">
+      <formText title="预计用时">
+        <text>{{expectedList[expectedVal]}}</text>
+      </formText>
+    </picker>
+    <!-- 重要等级 -->
+    <picker class="form-item" name="importantVal" value="{{importantVal}}" range="{{importantList}}" bindchange="bindRankChange">
+      <formText title="重要等级">
+        <text>{{importantList[importantVal]}}</text>
+      </formText>
+    </picker>
+    <!-- 是否要同步到云 -->
+    <formText class="form-item" title="同步到云">
+      <switch name="syncToCloud" checked="{{syncToCloud}}" type="switch" class="switch" bindchange="syncToCloud"></switch>
+    </formText>
+    <!-- 提交按钮 -->
+    <button class="submitBtn" disabled="{{!name}}" form-type="submit">{{title}}</button>
+  </form>
+</view>

@@ -1,4 +1,5 @@
 // components/form.js
+import utils from '../../utils/utils'
 Component({
 
   lifetimes: {
@@ -34,9 +35,12 @@ Component({
     content: '',
     date: '2020-05-20',
     time: '13:14',
-    isImportant: false,
-    importantValue: 50,
+    importantValue: 0,
     syncToCloud: false,
+    index: 1,
+    index1: 1,
+    array: ['25分钟', '50分钟', '75分钟', '100分钟', '125分钟', '150分钟', '175分钟', '200分钟'],
+    array1: ['一般', '重要', '非常重要']
   },
 
   /**
@@ -54,22 +58,10 @@ Component({
      * 获取一小时后的时间
      */
     getDate() {
-      const nowDate = new Date().getTime() + 1000 * 60 * 60;
-      const newDate = new Date(nowDate);
-      const year = newDate.getFullYear()
-      const month = newDate.getMonth() + 1
-      const day = newDate.getDate()
-      const hour = newDate.getHours()
-      const minute = newDate.getMinutes()
-      const formatNumber = n => {
-        n = n.toString()
-        return n[1] ? n : '0' + n
-      }
-      const date = [year, month, day].map(formatNumber).join('-')
-      const time = [hour, minute].map(formatNumber).join(':')
+      const nowDate = Date.now();
+      const newDate = new Date(nowDate + 1000 * 60 * 60);
       return {
-        date,
-        time
+        ...utils.formatTime(newDate)
       }
     },
 
@@ -94,13 +86,26 @@ Component({
     },
 
     /**
+     * @param {*} e 
+     */
+    bindPickerChange(e) {
+      this.setData({
+        index: e.detail.value
+      })
+    },
+
+    /**
      * 是否重要
      * @param {*} e 
      */
     isImportant(e) {
       const isImportant = e.detail.value;
+      let importantValue = 0;
+      if (isImportant) {
+        importantValue = 50
+      }
       this.setData({
-        isImportant
+        importantValue
       })
     },
 

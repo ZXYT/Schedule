@@ -1,123 +1,173 @@
-// miniprogram/pages/index.js
-const app = getApp()
+// pages/index/index.js
 // 获取数据库的引用
 const db = wx.cloud.database();
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    id: ''
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+    todoList: [],
+    lastindex: 0,
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+    const todoList = wx.getStorageSync('todos') || []
+    this.setData({
+      todoList,
+    })
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    this.getData()
+  },
 
+  showMore(e) {
+    // const {
+    //   todoList,
+    //   lastindex
+    // } = this.data
+    // const index = e.target.dataset.index
+    // if (index !== lastindex) {
+    //   todoList[lastindex].isHidden = true;
+    // }
+    // todoList[index].isHidden = !todoList[index].isHidden;
+    // this.setData({
+    //   todoList,
+    //   lastindex: index
+    // })
   },
 
   /**
-   * 页面上拉触底事件的处理函数
+   * 编辑任务
+   * @param {*} e 
    */
-  onReachBottom: function () {
-
+  edit(e) {
+    const index = e.target.dataset.index;
+    wx.navigateTo({
+      url: `/pages/modify/modify?type=edit&index=${index}`,
+    })
   },
 
   /**
-   * 用户点击右上角分享
+   * 删除数据
+   * @param {*} e 
    */
-  onShareAppMessage: function () {
+  delete(e) {
+    const index = e.target.dataset.index;
+    const {
+      todoList
+    } = this.data
+    const _id = todoList[index]._id
+    console.log(index, _id)
 
+    wx.showModal({
+      title: '警告',
+      content: '确认是否删除',
+      success: res => {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          todoList.splice(index, 1)
+          this.setData({
+            todoList
+          })
+          wx.setStorageSync('todos', todoList);
+          if (_id) {
+            console.log('_id:', _id)
+            this.dbDelete(_id)
+          }
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+          return false
+        }
+      }
+    })
   },
 
-  add() {
-    const data = {
-      name: 'test'
-    }
-    db.collection('todoList').add({
+  start(e) {
+    const index = e.target.dataset.index;
+    wx.reLaunch({
+      url: `/pages/current/current?index=${index}`
+    })
+  },
+
+  /**
+   * 从云端获取数据
+   */
+  async getData() {
+    const {
       data
-    }).then(res => {
-        console.log(res)
-        const id = res._id;
-        this.setData({
-          id
-        })
-      },
-      err => {
-        console.error(err)
-      }
-    )
+    } = await db.collection('todoList').get()
+    wx.stopPullDownRefresh()
+    this.isSync(data)
   },
-  delete() {
-    const id = this.data.id;
-    db.collection('todoList').doc(id).remove().then(res => {
-        console.log(res)
-      },
-      err => {
-        console.error(err)
-      }
-    )
+
+  /**
+   * 删除云端数据
+   * @param {*} _id 
+   */
+  dbDelete(_id) {
+    db.collection('todoList').doc(_id).remove()
   },
-  update() {
-    const id = this.data.id;
-    const data = {
-      name: 'test1'
+
+  /**
+   * 是否同步云端数据
+   * @param {*} data 
+   */
+  isSync(data) {
+    const len = data.length
+    if (len) {
+      wx.showModal({
+        title: '提示',
+        content: `在云端查询到${len}条数据，是否同步`,
+        success: res => {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            this.syncData(data)
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+            return false
+          }
+        }
+      })
+    } else {
+      wx.showToast({
+        icon: 'none',
+        title: '没有查询到数据',
+      })
     }
-    db.collection('todoList').doc(id).update({
-      data,
-    }).then(res => {
-        console.log(res)
-      },
-      err => {
-        console.error(err)
-      }
-    )
   },
-  get() {
-    db.collection('todoList').get().then(res => {
-        console.log(res)
-      },
-      err => {
-        console.error(err)
-      }
-    )
-  }
+
+  /**
+   * 同步云端数据
+   */
+  syncData(cloudList) {
+    let {
+      todoList
+    } = this.data;
+    if (todoList.length === 0) {
+      todoList = cloudList
+    } else {
+      todoList.forEach((ele, i) => {
+        cloudList.forEach((cloudEle, j) => {
+          if (ele._id === cloudEle._id) {
+            todoList[i] = cloudEle
+            cloudList.splice(j, 1);
+          }
+        })
+      })
+      todoList.push(...cloudList)
+    }
+    console.log(todoList)
+    this.setData({
+      todoList
+    })
+    wx.setStorageSync('todos', todoList)
+  },
 })

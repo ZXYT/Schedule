@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "myCard": "/components/card/card"
-  }
+    "myItem": "/components/item/item",
+    "myEmpty": "/components/empty/index"
+  },
+  "enablePullDownRefresh": true
 }

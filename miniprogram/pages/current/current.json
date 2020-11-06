@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "myCard": "/components/card/card",
+    "myEmpty": "/components/empty/index"
+  }
+}

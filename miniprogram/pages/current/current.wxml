@@ -1,0 +1,5 @@
+<!--miniprogram/pages/index.wxml-->
+<view>
+	<myCard wx:if="{{todo}}" todo="{{todo}}" bindend="end" />
+	<myEmpty wx:else title="{{'没有正在进行的任务'}}" sub="{{'开始一个吧'}}"/>
+</view>

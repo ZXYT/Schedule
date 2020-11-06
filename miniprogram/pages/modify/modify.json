@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "myForm": "/components/form/form"
+    "formText": "/components/formText/index"
   }
 }

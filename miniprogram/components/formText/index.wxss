@@ -1,0 +1,1 @@
+.text{display:flex;justify-content:space-between}.text .left{color:gray}

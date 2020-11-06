@@ -2,46 +2,71 @@
 <view>
   <view class="mask" bindtap="hideForm"></view>
   <form class="form container" catchsubmit="formSubmit" catchreset="formReset">
+    <!-- 编辑类型 -->
     <view class="head spaceBetween">
       <text class="text title">{{name}}</text>
       <text class="text icon iconfont icon-delete" hidden="{{!delete}}"></text>
     </view>
+    <!-- 任务名称 -->
     <view class="name spaceBetween">
       <input name="title" class="input" value="{{title}}" type="text" focus="true" placeholder="任务名称" placeholder-class="placeholder" focus confirm-type="next" />
       <view>
         <text class="text icon iconfont icon-important" hidden="{{!important}}"></text>
       </view>
     </view>
+    <!-- 任务描述 -->
     <textarea name="content" class="textarea" value="{{content}}" auto-height placeholder="任务描述" placeholder-class="placeholder" auto-height></textarea>
+    <!-- 日期选择器 -->
     <view class="section">
       <picker name="date" mode="date" value="{{date}}" start="1998-01-01" end="2222-12-31" bindchange="bindDateChange">
         <view class="spaceBetween">
-          <text class="text pickerName">选择日期:</text>
+          <text class="text pickerName">开始日期</text>
           <text class="text pickercontent">{{date}}</text>
         </view>
       </picker>
     </view>
+    <!-- 时间选择器 -->
     <view class="section">
       <picker name="time" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
         <view class="spaceBetween">
-          <text class="text pickerName">选择时间:</text>
+          <text class="text pickerName">开始时间</text>
           <text class="text pickercontent">{{time}}</text>
         </view>
       </picker>
     </view>
-    <view class="Characteristics">
-      <view class="spaceBetween">
-        <text class="text">重要</text>
-        <switch name="isImportant" checked="{{isImportant}}" type="switch" class="switch" bindchange="isImportant"></switch>
-      </view>
-      <slider name="importantValue" value="{{importantValue}}" show-value step="5" hidden="{{!isImportant}}"></slider>
+    <!-- 预计用时 -->
+    <view class="section">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="spaceBetween">
+          <text class="text pickerName">预计用时</text>
+          <text class="text pickercontent">{{array[index]}}</text>
+        </view>
+      </picker>
     </view>
+    <!-- 是否重要 -->
+    <view class="section">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array1}}">
+        <view class="spaceBetween">
+          <text class="text pickerName">重要等级</text>
+          <text class="text pickercontent">{{array1[index]}}</text>
+        </view>
+      </picker>
+    </view>
+    <!-- <view class="Characteristics">
+      <view class="spaceBetween">
+        <text class="text">重要等级:</text>
+        <switch checked="{{importantValue > 0}}" type="switch" class="switch" bindchange="isImportant"></switch>
+      </view>
+      <slider name="importantValue" value="{{importantValue}}" show-value step="5"></slider>
+    </view> -->
+    <!-- 是否要同步到云 -->
     <view class="Characteristics">
       <view class="spaceBetween">
-        <text class="text">同步到云</text>
+        <text class="text pickerName">同步到云</text>
         <switch name="syncToCloud" checked="{{syncToCloud}}" type="switch" class="switch" bindchange="syncToCloud"></switch>
       </view>
     </view>
+    <!-- 提交按钮 -->
     <button class="submitBtn" form-type="submit">{{name}}</button>
   </form>
 </view>

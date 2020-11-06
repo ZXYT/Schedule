@@ -1,0 +1,5 @@
+<!--components/countDown/index.wxml-->
+<view class="count-down">
+    <text wx:if="isShort" class="short"></text>
+    <view wx:else></view>
+</view>

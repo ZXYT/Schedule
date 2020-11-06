@@ -1,0 +1,5 @@
+<!-- components/index.wxml -->
+<view class="empty">
+    <view class="title">{{ title }}</view>
+    <view class="sub-title">{{ sub }}</view>
+</view>

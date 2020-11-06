@@ -1,27 +1,37 @@
 <!-- components/card.wxml -->
 <view class="container">
+  <!-- 头部 -->
   <view>
+    <!-- 当前状态 -->
     <text>{{title}}</text>
+    <!-- 剩余时间 -->
     <view class="left-time">
-      <text class="mins">{{formatLeft.mins}}</text>
-      <text class="secs">:{{formatLeft.secs}}</text>
+      <text class="mins">{{left.mins}}</text>
+      <text class="secs">:{{left.secs}}</text>
     </view>
   </view>
-  <view class="name">{{todo.name}}</view>
-  <view class="progress spaceBetween">
-    <text>进度：</text>
+  <!-- 任务名称 -->
+  <view class="name">
+    <text>当前任务：</text>
+    <text>{{todo.name}}</text>
+  </view>
+  <!-- 任务进度 -->
+  <view class="progress">
+    <text>任务进度：</text>
     <view>
-      <view class="circle complet" wx:for="{{cur}}"></view>
-      <view class="circle" wx:for="{{estimated - cur}}"></view>
-      <view class="circle postpone" wx:for="{{postpone - cur + estimated}}"></view>
+      <view class="circle complet" wx:for="{{cur}}" wx:key="index"></view>
+      <view class="circle" wx:for="{{todo.expectedVal + 1 - cur}}" wx:key="index"></view>
+      <view class="circle postpone" wx:for="{{postpone - cur + estimated + 1}}" wx:key="index"></view>
     </view>
   </view>
+  <!-- 预计完成时间 -->
   <view class="complet-time">
-    <text>预计完成时间</text>
+    <text>预计完成时间：</text>
     <text>{{completTime}}</text>
   </view>
+  <!-- 操作按钮 -->
   <view class="btns">
-    <button bindtap="start">开始</button>
-    <button bindtap="interrupt">中断</button>
+    <button class="btn" bindtap="handleTap">{{isStart ? '中断' : '开始'}}</button>
+    <button class="btn" bindtap="handleTapEnd">结束</button>
   </view>
 </view>

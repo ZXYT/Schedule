@@ -7,19 +7,21 @@ const formatTime = function (date) {
   var minute = date.getMinutes()
   var second = date.getSeconds()
 
-  return [year, month, day].map(timeFormat).join('/') + ' ' + [hour, minute, second].map(timeFormat).join(':')
+  return {
+    date: [year, month, day].map(timeFormat).join('-'),time: [hour, minute].map(timeFormat).join(':')
+  }
 }
 
 const timeFormat = num => num.toString().padStart(2, "0")
 
 const milliseconds2Time = (ms) => {
   let Time = {};
-  ms = ms / 1000;
-  if (ms > 0) {
-    const days = parseInt(ms / (60 * 60 * 24));
-    const hours = parseInt(ms % (60 * 60 * 24) / 3600);
-    const mins = parseInt(ms % (60 * 60 * 24) % 3600 / 60);
-    const secs = parseInt(ms % (60 * 60 * 24) % 3600 % 60);
+  const s = ms / 1000;
+  if (s > 0) {
+    const days = parseInt(s / (60 * 60 * 24));
+    const hours = parseInt(s % (60 * 60 * 24) / 3600);
+    const mins = parseInt(s % (60 * 60 * 24) % 3600 / 60);
+    const secs = parseInt(s % (60 * 60 * 24) % 3600 % 60);
     Time = {
       days: timeFormat(days),
       hours: timeFormat(hours),

@@ -1,0 +1,5 @@
+<!-- components/index.wxml -->
+<view class="text">
+    <text class="left">{{title}}</text>
+    <slot></slot>
+</view>

@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/list/list",
+    "pages/current/current",
     "pages/modify/modify"
   ],
   "window": {
@@ -17,11 +17,11 @@
   "tabBar": {
     "list": [{
         "pagePath": "pages/index/index",
-        "text": "当前任务"
+        "text": "任务列表"
       },
       {
-        "pagePath": "pages/list/list",
-        "text": "任务列表"
+        "pagePath": "pages/current/current",
+        "text": "当前任务"
       }
     ]
   }

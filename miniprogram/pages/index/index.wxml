@@ -1,4 +1,13 @@
-<!--miniprogram/pages/index.wxml-->
 <view>
-	<myCard/>
+	<!-- 任务列表 -->
+	<view wx:if="{{todoList.length}}">
+		<myItem wx:for="{{todoList}}" wx:key="index" data-index="{{index}}" item="{{item}}" catchshowMore="showMore"
+			catchdelete="delete" catchedit="edit" catchstart="start"></myItem>
+	</view>
+
+	<!-- 没有任务 -->
+	<myEmpty wx:else title="{{'还没有任务哦'}}" sub="{{'下拉同步或添加一个吧'}}" />
+
+	<!-- 添加按钮 -->
+	<navigator url="/pages/modify/modify?type=add" class="btn iconfont icon-add" />
 </view>
